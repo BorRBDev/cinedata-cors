@@ -1,4 +1,4 @@
-import { listarPeliculas, resenasDe, escribirResena, login, logout, usuarioActual } from "./api.js";
+import { estadisticas, listarPeliculas, resenasDe, escribirResena, login, logout, usuarioActual } from "./api.js";
 
 //  ATAJO
 const estado = {pagina: 1, limite: 4, filtros: {}, peliculaAbierta: null};
@@ -121,5 +121,44 @@ function pintarSesion() {
 
 
 
+ // ESTADISTICAS
+ function pintarEstadisticas(filas) {
+    const cuerpo = $("#tabla-estadisticas tbody");
+    cuerpo.replaceChildren();
+    for (const fila of filas) {
+        const tr = document.createElement("tr");
+        for (const valor of [fila.genero, fila.total, Number(fila.notaMedia).toFixed(2)]) {
+            const td = document.createElement("td");
+            td.textContent = valor;
+            tr.appendChild(td);
+        }
+        cuerpo.appendChild(tr);
+    }
+ }
+
+ async function cargarEstadisticas(minimo) {
+    const aviso = $("#estado-estadisticas");
+    aviso.classList.remove("error");
+    aviso.textContent = "...Cargando";
+    try {
+        const filas = await estadisticas(minimo);
+        pintarEstadisticas(filas);
+        aviso.textContent = filas.length ? "" : "Sin resultados";
+    } catch (error) {
+        pintarEstadisticas([]);
+        aviso.classList.add("error");
+        aviso.textContent = error.errores
+            ? error.errores.map(e => e.msg).join(". ")
+            : error.message;
+    }
+ }
+
+ $("#form-estadisticas").addEventListener("submit", evento => {
+    evento.preventDefault();
+    const { minimo } = Object.fromEntries(new FormData(evento.target));
+    cargarEstadisticas(minimo);
+ });
+
 pintarSesion();
 cargarPeliculas();
+cargarEstadisticas();

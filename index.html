@@ -50,6 +50,21 @@
       <button id="btn-siguiente">Siguiente →</button>
     </nav>
 
+    <section id="estadisticas" class="estadisticas">
+      <h2>Estadísticas</h2>
+      <form id="form-estadisticas" class="filtros">
+        <input type="number" name="minimo" placeholder="Mínimo de películas" min="1" max="5" step="1">
+        <button type="submit">Ver</button>
+      </form>
+      <p id="estado-estadisticas" class="estado"></p>
+      <table id="tabla-estadisticas">
+        <thead>
+          <tr><th>Género</th><th>Total</th><th>Nota media</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
     <section id="panel-resenas" class="resenas" hidden>
       <h2 id="titulo-resenas"></h2>
       <ul id="lista-resenas"></ul>

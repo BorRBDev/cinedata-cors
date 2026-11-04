@@ -9,7 +9,9 @@ async function pedir(ruta, opciones = {}) {
     const res = await fetch(`${API_URL}${ruta}`, {...opciones, headers: cabecera});
     const datos = res.status === 204 ? null : await res.json();
     if (!res.ok){
-        throw new Error(datos?.error || `Error ${res.status}`);
+        const fallo = new Error(datos?.error || `Error ${res.status}`);
+        if (datos?.errores) fallo.errores = datos.errores;
+        throw fallo;
     }
     return datos;
 }
@@ -17,6 +19,13 @@ async function pedir(ruta, opciones = {}) {
 export function listarPeliculas(parametros) {
     const query = new URLSearchParams(parametros);
     return pedir(`/peliculas?${query}`);
+}
+
+export function estadisticas(minimo) {
+    const query = new URLSearchParams();
+    if (minimo !== undefined && minimo !== null && minimo !== "") query.set("minimo", minimo);
+    const texto = query.toString();
+    return pedir(`/peliculas/estadisticas${texto ? `?${texto}` : ""}`);
 }
 
 export function resenasDe(peliculaId) {
