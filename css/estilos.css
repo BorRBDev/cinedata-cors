@@ -19,6 +19,15 @@ body {
   color: white;
 }
 
+.menu { display: flex; gap: 16px; }
+.menu a { color: white; text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+.menu a:hover, .menu a[aria-current="page"] { border-bottom-color: #D5E8F4; }
+
+.tabla { width: 100%; border-collapse: collapse; }
+.tabla th, .tabla td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #d5dde5; }
+.tabla th { background: #f7f9fb; }
+.tabla .num { text-align: right; }
+
 .login, .sesion, .filtros, .form-resena {
   display: flex;
   flex-wrap: wrap;

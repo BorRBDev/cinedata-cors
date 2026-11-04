@@ -9,9 +9,16 @@ async function pedir(ruta, opciones = {}) {
     const res = await fetch(`${API_URL}${ruta}`, {...opciones, headers: cabecera});
     const datos = res.status === 204 ? null : await res.json();
     if (!res.ok){
-        throw new Error(datos?.error || `Error ${res.status}`);
+        const error = new Error(datos?.error || `Error ${res.status}`);
+        error.detalles = datos?.detalles;
+        throw error;
     }
     return datos;
+}
+
+export function estadisticas(parametros) {
+    const query = new URLSearchParams(parametros);
+    return pedir(`/peliculas/estadisticas?${query}`);
 }
 
 export function listarPeliculas(parametros) {
