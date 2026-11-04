@@ -1,4 +1,4 @@
-import { listarPeliculas, resenasDe, escribirResena, login, logout, usuarioActual } from "./api.js";
+import { estadisticasGeneros, listarPeliculas, resenasDe, escribirResena, login, logout, usuarioActual } from "./api.js";
 
 //  ATAJO
 const estado = {pagina: 1, limite: 4, filtros: {}, peliculaAbierta: null};
@@ -120,6 +120,48 @@ function pintarSesion() {
 
 
 
+
+// ESTADISTICAS
+async function cargarEstadisticas() {
+    const minimo = $("#form-estadisticas").elements.minimo.value;
+    mostrarMensaje("...Cargando");
+    try {
+        const generos = await estadisticasGeneros(minimo);
+        const cuerpo = $("#tabla-estadisticas");
+        cuerpo.replaceChildren(...generos.map(g => {
+            const fila = document.createElement("tr");
+            const valores = [g.genero, g.total, g.notaMedia ?? "—"];
+            for (const valor of valores) {
+                const celda = document.createElement("td");
+                celda.textContent = valor;
+                fila.append(celda);
+            }
+            return fila;
+        }));
+        mostrarMensaje(`${generos.length} géneros`);
+    } catch (error) {
+        $("#tabla-estadisticas").replaceChildren();
+        const detalles = error.detalles?.length ? `: ${error.detalles.join(". ")}` : "";
+        mostrarMensaje(`${error.message}${detalles}`, true);
+    }
+}
+
+function mostrarVista(vista) {
+    const estadisticas = vista === "estadisticas";
+    $("#vista-peliculas").hidden = estadisticas;
+    $("#vista-estadisticas").hidden = !estadisticas;
+    $("#nav-peliculas").classList.toggle("activo", !estadisticas);
+    $("#nav-estadisticas").classList.toggle("activo", estadisticas);
+    if (estadisticas) cargarEstadisticas();
+    else cargarPeliculas();
+}
+
+$("#nav-peliculas").addEventListener("click", () => mostrarVista("peliculas"));
+$("#nav-estadisticas").addEventListener("click", () => mostrarVista("estadisticas"));
+$("#form-estadisticas").addEventListener("submit", evento => {
+    evento.preventDefault();
+    cargarEstadisticas();
+});
 
 pintarSesion();
 cargarPeliculas();

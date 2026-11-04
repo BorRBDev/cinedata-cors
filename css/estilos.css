@@ -95,4 +95,17 @@ button:disabled { background: #9fb0c0; cursor: default; }
   border-radius: 8px;
 }
 
+.menu { display: flex; gap: 8px; }
+
+.menu button { background: transparent; border: 1px solid #b8c4d0; }
+.menu button.activo { background: #2E75B6; border-color: #2E75B6; }
+
+.vista { display: flex; flex-direction: column; gap: 16px; }
+
+.tabla { width: 100%; border-collapse: collapse; }
+.tabla th, .tabla td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #d5dde5; }
+.tabla th { background: #D5E8F4; }
+.tabla td:nth-child(n+2), .tabla th:nth-child(n+2) { text-align: right; }
+.tabla td:nth-child(3) { font-weight: bold; color: #2E75B6; }
+
 .resenas ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
