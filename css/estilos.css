@@ -1,0 +1,98 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  color: #1a1a1a;
+}
+
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 24px;
+  background: #1F3864;
+  color: white;
+}
+
+.login, .sesion, .filtros, .form-resena {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+input, select, button {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #b8c4d0;
+  font-size: 15px;
+}
+
+button {
+  background: #2E75B6;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled { background: #9fb0c0; cursor: default; }
+
+.panel {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.estado {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #D5E8F4;
+}
+
+.estado.error { background: #C0392B; color: white; }
+
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid #d5dde5;
+  border-radius: 8px;
+}
+
+.tarjeta h3 { font-size: 17px; }
+.nota { font-weight: bold; color: #2E75B6; }
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.resenas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: #f7f9fb;
+  border-radius: 8px;
+}
+
+.resenas ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
