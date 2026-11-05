@@ -19,6 +19,13 @@ export function listarPeliculas(parametros) {
     return pedir(`/peliculas?${query}`);
 }
 
+export function estadisticas(minimo) {
+    const query = new URLSearchParams();
+    if (minimo !== undefined && minimo !== null && minimo !== "") query.set("minimo", minimo);
+    const texto = query.toString();
+    return pedir(`/peliculas/estadisticas${texto ? `?${texto}` : ""}`);
+}
+
 export function resenasDe(peliculaId) {
     return pedir(`/peliculas/${peliculaId}/resenas`);
 }
